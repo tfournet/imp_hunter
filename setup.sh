@@ -20,9 +20,9 @@ which dig    || yum -y install bind-utils
 
 
 echo "Creating Blank Config Files"
-if [ ! -d $basedir ] ; then mkdir -p $basedir; fi
-if [ ! -d $dbdir ] ;   then mkdir -p $dbdir;   fi
-if [ ! -d $confdir ] ; then mkdir -p $confdir; fi
+if [[ ! -d $basedir ]]; then mkdir -p $basedir; fi
+if [[ ! -d $dbdir ]];   then mkdir -p $dbdir;   fi
+if [[ ! -d $confdir ]]; then mkdir -p $confdir; fi
 
 if [[ ! -f $ignorefile ]] ; then touch $ignorefile; fi
 if [[ ! -f $domainfile ]] ; then touch $domainfile; fi
