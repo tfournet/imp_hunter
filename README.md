@@ -38,7 +38,7 @@ Nope. As of this writing, this is a proof-of-concept project by a motivated user
 
 > It doesn't work like I want it to! 
 
-Okay, raise an Issue here, or better yet, hit me (@zaf) up in the Perch Squawkbox on Slack
+Okay, raise an Issue here, or better yet, hit me (**@zaf**) up in the Perch Squawkbox on Slack
 
 
 
