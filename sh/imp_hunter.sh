@@ -22,7 +22,7 @@ urlcrazy_opts=" \
   --format=CSV \
   "
  
-log_cmd="logger -n localhost -p1 "
+log_cmd="logger"
 
 systemctl start docker
 
