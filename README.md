@@ -8,7 +8,7 @@ A domain imposter is an internet domain name (*ie. google.com*) that has been re
 This project makes use of two other projects: [dnstwist](https://github.com/elceef/dnstwist) and [urlcrazy](https://github.com/urbanadventurer/urlcrazy). These apps use _fuzzing_ and other techniques to identify domain names that bad actors would be likely to register in order to impersonate the original company. We utilize docker to run each of them to gain the greatest possible intel.
 
 ## Installation
-This script is intended to run on Perch sensor machines, but really any Linux will do. This will install docker and run two containers during the collection job, but they are not persistent. It will be up to you to ingest the logs if running on a different system. Non-RH derivatives will need some tweaking as well. The scripts auto-update weekly via a cron job. 
+This script is intended to run on Perch sensor machines, but really any Linux will do. This will install docker and run two containers during the collection job, but they are not persistent. It will be up to you to ingest the logs if running on a different system. Non-RH derivatives will need some tweaking as well. The scripts auto-update from this repo weekly via a cron job. 
 Simply:
 ```bash
 sudo yum -y install git
@@ -46,7 +46,7 @@ Nope. As of this writing, this is a proof-of-concept project by a motivated user
 
 > It doesn't work like I want it to! 
 
-Okay, raise an Issue here, or better yet, hit me (**@zaf**) up in the Perch Squawkbox on Slack
+Okay, raise an [Issue](https://github.com/tfournet/imp_hunter/issues) here, or better yet, hit me (**@zaf**) up in the Perch Squawkbox on Slack
 
 
 
