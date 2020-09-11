@@ -1,7 +1,15 @@
 #!/bin/sh
 
+basedir=/opt/imp_hunter
+dbdir=$basedir/var
+confdir=$basedir/etc
 
-domainfile=/etc/perch/domains.txt
+domainfile=$confdir/domains.txt
+ignorefile=$confdir/domains-ignore.txt
+
+
+if [ ! -d $dbdir ]; then mkdir -p $dbdir; fi
+
 twist_opts=" \
   --dictionary dictionaries/english.dict \
   --tld dictionaries/common_tlds.dict \
@@ -14,7 +22,7 @@ urlcrazy_opts=" \
   --format=CSV \
   "
  
-log_cmd="logger"
+log_cmd="echo logger"
 
 systemctl start docker
 
@@ -27,6 +35,13 @@ cd /tmp
 
 while read -r domain; do
 
+  foundfile=$dbdir/$domain.found
+  lastfoundfile=$foundfile.lastrun
+  if [[ -f $foundfile ]]; then
+    mv -f $foundfile $lastfoundfile
+  fi; 
+  touch $lastfoundfile
+  
   # Run dnstwist via docker
   docker run elceef/dnstwist $twist_opts $domain > $domain.twist.csv
   while read -r twisteddomain; do
@@ -36,8 +51,9 @@ while read -r domain; do
     dom=$( echo $twisteddomain | awk 'BEGIN { FS = "," }; { print $2 }' )
     mx=$( echo $twisteddomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $7 }' )
-    if [[ $dom != $domain && $dom != "domain-name" && -n $mx ]] ; then
+    if [[ $dom != $domain && $dom != "domain-name" && -n $mx && $(grep -qv $dom $ignorefile) ]] ; then
       $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | Country: $country  | MX: $mx"
+      echo $dom >> $foundfile
     fi
 
   done < $domain.twist.csv
@@ -52,12 +68,22 @@ while read -r domain; do
     dom=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $2 }' )
     mx=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     #country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $6 }' )
-    if [[ $dom != "Typo" && -n $mx ]] ; then
+    if [[ $dom != "Typo" && -n $mx && $(grep -qv $dom $ignorefile) && $(grep -qv $dom $foundfile ]] ; then
       $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
+        echo $dom >> $foundfile
     fi
 
   done < $domain.crazy.csv
   rm -f $domain.crazy.csv 
 
 done < $domainfile
+
+while read -r founddomain; do
+  if [[ $(grep -qv $founddomain $lastfoundfile ]]; then
+    echo "New domain found: $founddomain. Gotta log this."
+  fi
+done < $foundfile
+
+
+
 
