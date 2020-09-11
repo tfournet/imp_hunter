@@ -2,7 +2,7 @@
 Searches for Imposter Domains to log to Perch
 
 The goal of this project is to add OSINT domain imposter threat intelligence to [Perch](https://www.perchsecurity.com) notifications.
-A domain imposter is an internet domain name (*ie. google.com*) that has been registered with the purpose of tricking people into thinking that it is another, more reputable domain. For example, *go0gle.com*
+A domain imposter is an internet domain name (*ie. google.com*) that has been registered with the purpose of tricking people into thinking that it is another, more reputable domain. For example, *go0gle.com or goog1e.com*
 
 This project makes use of two other projects: [dnstwist](https://github.com/elceef/dnstwist) and [urlcrazy](https://github.com/urbanadventurer/urlcrazy). We utilize docker to run each of them to gain the greatest possible intel.
 
