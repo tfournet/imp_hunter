@@ -13,9 +13,7 @@ twist_opts=" \
 urlcrazy_opts=" \
   --format=CSV \
   "
-
-yum -y install docker bind-utils 
-
+  
 systemctl start docker
 
 if [ ! -f $domainfile ] ; then 
