@@ -82,16 +82,18 @@ while read -r domain; do
 
   done < $domain.crazy.csv
   rm -f $domain.crazy.csv 
+  
+  while read -r founddomain; do
+    if [[ ! $(grep -qi $founddomain $lastfoundfile) ]]; then
+      alert-msg="{ \"logsource\": \"imp_hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\" }"
+      #ALERT: New Domain Imposter Found: $founddomain"
+      $log_cmd $alert-msg
+    fi
+  done < $foundfile
 
 done < $domainfile
 
-while read -r founddomain; do
-  if [[ ! $(grep -qi $founddomain $lastfoundfile) ]]; then
-    alert-msg="{ \"logsource\": \"imp_hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\" }
-    #ALERT: New Domain Imposter Found: $founddomain"
-    $log_cmd $alert-msg
-  fi
-done < $foundfile
+
 
 
 
