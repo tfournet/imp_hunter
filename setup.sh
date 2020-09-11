@@ -13,9 +13,11 @@ yum -y install docker bind-utils
 echo "Creating domain list file $domainlist"
 touch $domainlist
 
-echo "Setting up Daily Cron Job"
-cp cron/imp_hunter_daily /etc/cron.daily
+echo "Setting up Cron Job"
+cp -f cron/imp_hunter_daily /etc/cron.daily
 chmod a+x /etc/cron.daily/imp_hunter_daily
+cp -f cron/update_imp_hunter /etc/cron.weekly
+chmod a+x /etc/cron.weekly/update_imp_hunter
 
 mkdir -p $installdir
 cp -f sh/$scriptfile $installdir
