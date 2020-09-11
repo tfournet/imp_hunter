@@ -79,7 +79,7 @@ while read -r domain; do
 done < $domainfile
 
 while read -r founddomain; do
-  if [[ $(grep -qv $founddomain $lastfoundfile ]]; then
+  if [[ $(grep -qv $founddomain $lastfoundfile) ]]; then
     echo "New domain found: $founddomain. Gotta log this."
   fi
 done < $foundfile
