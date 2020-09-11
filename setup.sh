@@ -31,15 +31,19 @@ if [[ ! -f $domainfile ]] ; then touch $domainfile; fi
 echo "Installing Scripts"
 installdir="/opt/imp_hunter"
 scriptfile="imp_hunter.sh"
+updatescript="update_imp_hunter.sh"
 
 mkdir -p $installdir
 cp -f sh/$scriptfile $installdir
 chmod a+x $installdir/$scriptfile
 
+cp -f sh/$updatescript $installdir
+chmod a+x $installdir/$updatescript
+
 
 echo "Setting up Cron Job"
 ln -s $installdir/$scriptfile /etc/cron.daily
-ln -s $installdir/update_imp_hunter.sh /etc/cron.weekly
+ln -s $installdir/$updatescript /etc/cron.weekly
 
 
 echo "Initial setup complete. Add domain(s) to monitor to $domainfile and run $installdir/$scriptfile to run manually."
