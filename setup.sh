@@ -17,7 +17,7 @@ echo "Setting up Daily Cron Job"
 cp cron/imp_hunter_daily /etc/cron.daily
 chmod a+x /etc/cron.daily/imp_hunter_daily
 
-mkdikr -p $installdir
+mkdir -p $installdir
 cp -f bash/$scriptfile $installdir
 chmod a+x $installdir/$scriptfile
 
