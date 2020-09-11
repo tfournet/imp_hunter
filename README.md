@@ -30,7 +30,7 @@ Modify `/etc/perch/domains.txt` to include all of the organization's registered 
 
 > What do I do about imposter domains?
 
-Good question! It may be possible to report them to the abuse address at their registrar. You also may want to warn users, clients, or vendors about the imposter. This is obviously an important convern to me, so I'd love to hear more ideas!
+Good question! It may be possible to report them to the abuse address at their registrar. You also may want to warn users, clients, or vendors about the imposter. This is obviously an important concern to me, so I'd love to hear more ideas!
 
 > Is any of this supported by Perch?
 
