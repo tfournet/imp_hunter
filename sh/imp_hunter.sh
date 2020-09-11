@@ -72,7 +72,7 @@ while read -r domain; do
     mx=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     #country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $6 }' )
     
-    if [[ $dom != "Typo" && -n $mx && $(grep -qv $dom $ignorefile) && $(grep -qi $dom $ignorefile) ]]; then
+    if [[ $dom != "Typo" && -n $mx && $(grep -qv $dom $ignorefile) && ! $(grep -qi $dom $ignorefile) ]]; then
       $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
       echo $dom >> $foundfile
     fi
