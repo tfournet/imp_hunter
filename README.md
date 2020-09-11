@@ -16,6 +16,7 @@ cd imp_hunter
 sudo sh setup.sh
 ```
 Modify `/opt/imp_hunter/etc/domains.txt` to include all of the organization's registered domain names.
+
 Modify `/opt/imp_hunter/etc/domains-ignore.txt` to exclude domains from detection and alerting.
 
 
