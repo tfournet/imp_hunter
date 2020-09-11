@@ -27,7 +27,7 @@ urlcrazy_opts=" \
  
 log_cmd="logger -n $ip -t imp_hunter"
 
-systemctl start docker
+systemctl status docker >/dev/null || systemctl start docker
 
 if [ ! -f $domainfile ] ; then 
   echo "Error unable to read $domainfile"
