@@ -15,17 +15,18 @@ git clone https://github.com/tfournet/imp_hunter
 cd imp_hunter
 sudo sh setup.sh
 ```
-Modify `/etc/perch/domains.txt` to include all of the organization's registered domain names
+Modify `/opt/imp_hunter/etc/domains.txt` to include all of the organization's registered domain names.
+Modify `/opt/imp_hunter/etc/domains-ignore.txt` to exclude domains from detection and alerting.
 
 
 ## TODO
 - [X] Automatic updates via cron
-- [ ] Decide whether it would be better to store known state in a lightweight DB on the sensor and only log changes?
+- [X] Decide whether it would be better to store known state in a lightweight DB on the sensor and only log changes?
 - [ ] Create and Document Perch **Event Notifications** for found events
-- [ ] Public ENs to Perch Marketplace
+- [ ] Publish ENs to Perch Marketplace
 - [ ] Tweak logging format
-- [ ] Eliminate duplications between detection projects
-- [ ] Create /etc/perch if it doesn't exist
+- [X] Eliminate duplications between detection projects
+- [X] Create any necessary file or folder if it doesn't exist
 
 ## FAQ
 
