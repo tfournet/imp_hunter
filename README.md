@@ -5,7 +5,7 @@ Searches for Imposter Domains to log to Perch                                   
 The goal of this project is to add OSINT domain imposter threat intelligence to [Perch](https://www.perchsecurity.com) notifications.
 A domain imposter is an internet domain name (*ie. google.com*) that has been registered with the purpose of tricking people into thinking that it is another, more reputable domain. For example, *go0gle.com or goog1e.com*
 
-This project makes use of two other projects: [dnstwist](https://github.com/elceef/dnstwist) and [urlcrazy](https://github.com/urbanadventurer/urlcrazy). We utilize docker to run each of them to gain the greatest possible intel.
+This project makes use of two other projects: [dnstwist](https://github.com/elceef/dnstwist) and [urlcrazy](https://github.com/urbanadventurer/urlcrazy). These apps use _fuzzing_ and other techniques to identify domain names that bad actors would be likely to register in order to impersonate the original company. We utilize docker to run each of them to gain the greatest possible intel.
 
 ## Installation
 This script is intended to run on Perch sensor machines, but really any Linux will do. This will install docker and run two containers during the collection job, but they are not persistent. It will be up to you to ingest the logs if running on a different system. Non-RH derivatives will need some tweaking as well. The scripts auto-update weekly via a cron job. 
