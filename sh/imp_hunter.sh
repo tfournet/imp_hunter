@@ -22,7 +22,7 @@ urlcrazy_opts=" \
   --format=CSV \
   "
  
-log_cmd="echo logger"
+log_cmd="logger -n localhost -p1 "
 
 systemctl start docker
 
@@ -53,9 +53,9 @@ while read -r domain; do
     dom=$( echo $twisteddomain | awk 'BEGIN { FS = "," }; { print $2 }' )
     mx=$( echo $twisteddomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $7 }' )
-    if [[ $dom != $domain && $dom != "domain-name" && -n $mx ]] ; then echo $dom ; fi
+    #if [[ $dom != $domain && $dom != "domain-name" && -n $mx ]] ; then echo $dom ; fi
     if [[ $dom != $domain && $dom != "domain-name" && -n $mx && ! $(grep -qi $dom $ignorefile) ]]; then
-      $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | Country: $country  | MX: $mx"
+      #$log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | Country: $country  | MX: $mx"
       echo $dom >> $foundfile
     fi
 
@@ -73,7 +73,7 @@ while read -r domain; do
     #country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $6 }' )
     
     if [[ $dom != "Typo" && -n $mx && $(grep -qv $dom $ignorefile) && ! $(grep -qi $dom $ignorefile) ]]; then
-      $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
+      #$log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
       echo $dom >> $foundfile
     fi
 
@@ -83,8 +83,8 @@ while read -r domain; do
 done < $domainfile
 
 while read -r founddomain; do
-  if [[ $(grep -qv $founddomain $lastfoundfile) ]]; then
-    echo "New domain found: $founddomain. Gotta log this."
+  if [[ ! $(grep -qi $founddomain $lastfoundfile) ]]; then
+    $log_cmd "ALERT: New Domain Imposter Found: $founddomain"
   fi
 done < $foundfile
 
