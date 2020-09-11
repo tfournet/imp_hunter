@@ -13,7 +13,9 @@ twist_opts=" \
 urlcrazy_opts=" \
   --format=CSV \
   "
-  
+ 
+log_cmd="logger"
+
 systemctl start docker
 
 if [ ! -f $domainfile ] ; then 
@@ -35,7 +37,7 @@ while read -r domain; do
     mx=$( echo $twisteddomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $7 }' )
     if [[ $dom != $domain && $dom != "domain-name" && -n $mx ]] ; then
-      echo logger "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | Country: $country  | MX: $mx"
+      $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | Country: $country  | MX: $mx"
     fi
 
   done < $domain.twist.csv
@@ -51,7 +53,7 @@ while read -r domain; do
     mx=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     #country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $6 }' )
     if [[ $dom != "Typo" && -n $mx ]] ; then
-      echo logger "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
+      $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
     fi
 
   done < $domain.crazy.csv
