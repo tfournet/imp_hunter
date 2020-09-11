@@ -36,10 +36,12 @@ cd /tmp
 while read -r domain; do
 
   foundfile=$dbdir/$domain.found
+ 
   lastfoundfile=$foundfile.lastrun
   if [[ -f $foundfile ]]; then
     mv -f $foundfile $lastfoundfile
   fi; 
+  touch $foundfile
   touch $lastfoundfile
   
   # Run dnstwist via docker
@@ -51,6 +53,7 @@ while read -r domain; do
     dom=$( echo $twisteddomain | awk 'BEGIN { FS = "," }; { print $2 }' )
     mx=$( echo $twisteddomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $7 }' )
+    if [[ $dom != $domain && $dom != "domain-name" && -n $mx ]] ; then echo $dom ; fi
     if [[ $dom != $domain && $dom != "domain-name" && -n $mx && $(grep -qv $dom $ignorefile) ]]; then
       $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | Country: $country  | MX: $mx"
       echo $dom >> $foundfile
@@ -68,6 +71,7 @@ while read -r domain; do
     dom=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $2 }' )
     mx=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $5 }' )
     #country=$( echo $crazydomain | awk 'BEGIN { FS = "," }; { print $6 }' )
+    
     if [[ $dom != "Typo" && -n $mx && $(grep -qv $dom $ignorefile) && $(grep -qv $dom $foundfile) ]]; then
       $log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
       echo $dom >> $foundfile
