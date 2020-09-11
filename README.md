@@ -15,9 +15,9 @@ git clone https://github.com/tfournet/imp_hunter
 cd imp_hunter
 sudo sh setup.sh
 ```
-Modify `/opt/imp_hunter/etc/domains.txt` to include all of the organization's registered domain names.
+Modify `/opt/imp_hunter/etc/domains.txt` to **include** all of the organization's registered domain names.
 
-Modify `/opt/imp_hunter/etc/domains-ignore.txt` to exclude domains from detection and alerting.
+Modify `/opt/imp_hunter/etc/domains-ignore.txt` to **exclude** domains from detection and alerting.
 
 
 ## TODO
@@ -31,9 +31,13 @@ Modify `/opt/imp_hunter/etc/domains-ignore.txt` to exclude domains from detectio
 
 ## FAQ
 
+> Why do I care about imposter domains?
+
+Imposters can be used to communicate with your clients/vendors/partners and trick them into a financial transaction, code execution, or other things. Although *technically* those people would be the victims, this can negatively impact you and your relationship with your partners.
+
 > What do I do about imposter domains?
 
-Good question! It may be possible to report them to the abuse address at their registrar. You also may want to warn users, clients, or vendors about the imposter. This is obviously an important concern to me, so I'd love to hear more ideas!
+Good question! It may be possible to report them to the abuse address at their registrar. You also may want to warn users, clients, or vendors about the imposter. In some situations, even filing trademark claims against someone may be necessary. This is obviously an important concern to me, so I'd love to hear more ideas. This is a tough battle. 
 
 > Is any of this supported by Perch?
 
