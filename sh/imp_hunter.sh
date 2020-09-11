@@ -7,6 +7,9 @@ confdir=$basedir/etc
 domainfile=$confdir/domains.txt
 ignorefile=$confdir/domains-ignore.txt
 
+# Get network interface to use for talking to myself so Perch picks up the data
+iface=$(route -n | grep ^0.0.0.0 | awk '{ print $8 }')
+ip=$(ip -4 address show $iface | grep inet | awk '{print $2}' | cut -f1 -d\/)
 
 if [ ! -d $dbdir ]; then mkdir -p $dbdir; fi
 
@@ -22,7 +25,7 @@ urlcrazy_opts=" \
   --format=CSV \
   "
  
-log_cmd="logger"
+log_cmd="logger -n $ip -t imp_hunter"
 
 systemctl start docker
 
@@ -84,7 +87,8 @@ done < $domainfile
 
 while read -r founddomain; do
   if [[ ! $(grep -qi $founddomain $lastfoundfile) ]]; then
-    alert-msg="ALERT: New Domain Imposter Found: $founddomain"
+    alert-msg="{ \"logsource\": \"imp_hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\" }
+    #ALERT: New Domain Imposter Found: $founddomain"
     $log_cmd $alert-msg
   fi
 done < $foundfile
