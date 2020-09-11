@@ -20,6 +20,7 @@ Modify `/etc/perch/domains.txt` to include all of the organization's registered 
 
 ## TODO
 - [X] Automatic updates via cron
+- [ ] Decide whether it would be better to store known state in a lightweight DB on the sensor and only log changes?
 - [ ] Create and Document Perch **Event Notifications** for found events
 - [ ] Public ENs to Perch Marketplace
 - [ ] Tweak logging format
