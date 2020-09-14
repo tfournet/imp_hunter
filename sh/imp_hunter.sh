@@ -85,7 +85,7 @@ while read -r domain; do
   
   while read -r founddomain; do
     if [[ ! $(grep -qi $founddomain $lastfoundfile) ]]; then
-      alertmsg="{ \"logsource\": \"imp_hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\" }"
+      alertmsg="{ \"logsource\": \"imp-hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\" }"
       #ALERT: New Domain Imposter Found: $founddomain"
       $log_cmd $alertmsg
     fi
