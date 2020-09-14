@@ -59,7 +59,7 @@ while read -r domain; do
     #if [[ $dom != $domain && $dom != "domain-name" && -n $mx ]] ; then echo $dom ; fi
     if [[ $dom != $domain && $dom != "domain-name" && -n $mx && ! $(grep -qi $dom $ignorefile) ]]; then
       #$log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | Country: $country  | MX: $mx"
-      echo $dom >> $foundfile
+      echo $dom,$source,$fuzzer >> $foundfile
     fi
 
   done < $domain.twist.csv
@@ -77,15 +77,18 @@ while read -r domain; do
     
     if [[ $dom != "Typo" && -n $mx && $(grep -qv $dom $ignorefile) && ! $(grep -qi $dom $ignorefile) ]]; then
       #$log_cmd "DOMAIN_IMPOSTER: FoundDomain: $dom | SourceAlgorithm: $source | FuzzerType: $fuzzer | MX: $mx"
-      echo $dom >> $foundfile
+      echo $dom,$source,$fuzzer >> $foundfile
     fi
 
   done < $domain.crazy.csv
   rm -f $domain.crazy.csv 
   
-  while read -r founddomain; do
+  while read -r line; do
+    founddomain=$( echo $line | awk 'BEGIN { FS = "," }; { print $1 }' )
+    source=$( echo $line | awk 'BEGIN { FS = "," }; { print $2 }' )
+    fuzzer=$( echo $line | awk 'BEGIN { FS = "," }; { print $3 }' )
     if [[ ! $(grep -qi $founddomain $lastfoundfile) ]]; then
-      alertmsg="{ \"logsource\": \"imp-hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\" }"
+      alertmsg="{ \"logsource\": \"imp-hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\", \"source_app": \"$source\", \"fuzz_method\": \"fuzzer\" }"
       #ALERT: New Domain Imposter Found: $founddomain"
       $log_cmd $alertmsg
     fi
