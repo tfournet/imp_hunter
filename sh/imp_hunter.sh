@@ -25,7 +25,7 @@ urlcrazy_opts=" \
   --format=CSV \
   "
  
-log_cmd="logger -n $ip -t 'imp_hunter'"
+log_cmd="logger -n $ip -t 'imp-hunter'"
 
 systemctl status docker >/dev/null || systemctl start docker
 
