@@ -17,6 +17,7 @@ clear
 echo "Making sure required packages are installed (docker, bind-utils)"
 which docker || yum -y install docker 
 which dig    || yum -y install bind-utils 
+rpm -q perch_siem || yum -y install perch_siem
 
 
 echo "Creating Blank Config Files"
