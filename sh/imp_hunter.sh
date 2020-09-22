@@ -8,11 +8,12 @@ domainfile=$confdir/domains.txt
 ignorefile=$confdir/domains-ignore.txt
 
 # Get network interface to use for talking to myself so Perch picks up the data
-iface=$(route -n | grep ^0.0.0.0 | awk '{ print $8 }')
-ip=$(ip -4 address show $iface | grep inet | awk '{print $2}' | cut -f1 -d\/)
+#iface=$(route -n | grep ^0.0.0.0 | awk '{ print $8 }')
+#ip=$(ip -4 address show $iface | grep inet | awk '{print $2}' | cut -f1 -d\/)
 
 if [ ! -d $dbdir ]; then mkdir -p $dbdir; fi
 
+dnstwist="docker run elceef/dnstwist"
 twist_opts=" \
   --dictionary dictionaries/english.dict \
   --tld dictionaries/common_tlds.dict \
@@ -21,11 +22,13 @@ twist_opts=" \
   --registered \
   "
 
+urlcrazy="docker run jamesmstone/urlcrazy"
 urlcrazy_opts=" \
   --format=CSV \
   "
  
-log_cmd="logger -n $ip -t 'imp-hunter'"
+#log_cmd="logger -n $ip -t 'imp-hunter'"
+log_cmd="logger -t 'imp-hunter'"
 
 systemctl status docker >/dev/null || systemctl start docker
 
@@ -48,7 +51,7 @@ while read -r domain; do
   touch $lastfoundfile
   
   # Run dnstwist via docker
-  docker run elceef/dnstwist $twist_opts $domain > $domain.twist.csv
+  $dnstwist $twist_opts $domain > $domain.twist.csv
   while read -r twisteddomain; do
       
     source="dnstwist"
@@ -66,7 +69,7 @@ while read -r domain; do
   rm -f $domain.twist.csv
 
   # Run urlcrazy via docker
-  docker run jamesmstone/urlcrazy $urlcrazy_opts $domain >> $domain.crazy.csv
+  $urlcrazy $urlcrazy_opts $domain >> $domain.crazy.csv
   while read -r crazydomain; do
 
     source="urlcrazy"
