@@ -91,7 +91,7 @@ while read -r domain; do
     source=$( echo $line | awk 'BEGIN { FS = "," }; { print $2 }' )
     fuzzer=$( echo $line | awk 'BEGIN { FS = "," }; { print $3 }' )
     if [[ ! $(grep -qi $founddomain $lastfoundfile) ]]; then
-      alertmsg="{ \"logsource\": \"imp-hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\", \"source_app": \"$source\", \"fuzz_method\": \"fuzzer\" }"
+      alertmsg="{ \"logsource\": \"imp-hunter\", \"notification\": \"New Domain Imposter Found\", \"domain\": \"$founddomain\", \"source_app\": \"$source\", \"fuzz_method\": \"fuzzer\" }"
       #ALERT: New Domain Imposter Found: $founddomain"
       $log_cmd $alertmsg
     fi
