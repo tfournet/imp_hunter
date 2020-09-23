@@ -10,6 +10,7 @@ ignorefile=$confdir/domains-ignore.txt
 # Get network interface to use for talking to myself so Perch picks up the data
 #iface=$(route -n | grep ^0.0.0.0 | awk '{ print $8 }')
 #ip=$(ip -4 address show $iface | grep inet | awk '{print $2}' | cut -f1 -d\/)
+ip="127.0.0.1" #nevermind, just going to use localhost. will clean this up later
 
 if [ ! -d $dbdir ]; then mkdir -p $dbdir; fi
 
@@ -27,8 +28,7 @@ urlcrazy_opts=" \
   --format=CSV \
   "
  
-#log_cmd="logger -n $ip -t 'imp-hunter'"
-log_cmd="logger -t 'imp-hunter'"
+log_cmd="logger -n $ip -t 'imp-hunter'"
 
 systemctl status docker >/dev/null || systemctl start docker
 
