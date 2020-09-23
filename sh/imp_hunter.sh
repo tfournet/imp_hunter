@@ -1,4 +1,4 @@
-s#!/bin/sh
+#!/bin/sh
 
 basedir=/opt/imp_hunter
 dbdir=$basedir/var
