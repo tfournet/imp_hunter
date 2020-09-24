@@ -19,7 +19,7 @@ which docker || yum -y install docker
 sed -ie "s/enabled=1/enabled=0/g" /etc/yum/pluginconf.d/subscription-manager.conf # Docker installs this for some stupid reason
 
 which dig    || yum -y install bind-utils 
-rpm -q perch_siem || yum -y install perch_siem
+rpm -q perch_siem || (yum -y install perch_siem && systemctl restart logstash)
 
 
 echo "Creating Blank Config Files"
