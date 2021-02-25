@@ -34,7 +34,7 @@ Modify `/opt/imp_hunter/etc/domains-ignore.txt` to **exclude** domains from dete
 
 > Why do I care about imposter domains?
 
-Imposters can be used to communicate with your clients/vendors/partners and trick them into a financial transaction, code execution, or other things. Although *technically* those people would be the victims, this can negatively impact you and your relationship with your partners.
+Imposters can be used to communicate with your users/clients/vendors/partners and trick them into a financial transaction, code execution, or other things. Although *technically* those people would be the victims, this can negatively impact you and your relationship with your partners.
 
 > What do I do about imposter domains?
 
